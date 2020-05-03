@@ -1,8 +1,8 @@
 mysql:
-    image: docker.io/centos/mysql-80-centos7
+    image: docker.io/centos/mysql-57-centos7
     restart: always
     volumes:
-         - /docker-airflow/mariadb_data:/var/lib/mysql
+         - /docker-airflow_3.7/mariadb_data:/var/lib/mysql
     ports:
         - "3306:3306"
     environment:
@@ -23,11 +23,11 @@ rabbitmq:
         - RABBITMQ_DEFAULT_VHOST=airflow
 
 webserver:
-    image: tclezhil/airflow-webserver2.7
+    image: tclezhil/airflow-python3.6
     restart: always
     volumes:
-         - /docker-airflow/dags:/opt/airflow/dags
-         - /docker-airflow/logs:/opt/airflow/logs
+         - /docker-airflow_3.7/dags:/opt/airflow/dags
+         - /docker-airflow_3.7/logs:/opt/airflow/logs
     environment:
         - AIRFLOW_HOME=/opt/airflow
     ports:
@@ -40,7 +40,7 @@ webserver:
     command: webserver
 
 flower:
-    image: tclezhil/airflow-webserver2.7
+    image: tclezhil/airflow-python3.6
     restart: always
     environment:
         - AIRFLOW_HOME=/opt/airflow
@@ -51,11 +51,11 @@ flower:
     command: flower
 
 scheduler:
-    image: tclezhil/airflow-webserver2.7
+    image: tclezhil/airflow-python3.6
     restart: always
     volumes:
-        - /docker-airflow/dags:/opt/airflow/dags
-        - /docker-airflow/logs:/opt/airflow/logs
+        - /docker-airflow_3.7/dags:/opt/airflow/dags
+        - /docker-airflow_3.7/logs:/opt/airflow/logs
     environment:
         - AIRFLOW_HOME=/opt/airflow
     links:
@@ -64,11 +64,11 @@ scheduler:
     command: scheduler
 
 worker:
-    image: tclezhil/airflow-webserver2.7
+    image: tclezhil/airflow-python3.6
     restart: always
     volumes:
-        - /docker-airflow/dags:/opt/airflow/dags
-        - /docker-airflow/logs:/opt/airflow/logs
+        - /docker-airflow_3.7/dags:/opt/airflow/dags
+        - /docker-airflow_3.7/logs:/opt/airflow/logs
     environment:
         - AIRFLOW_HOME=/opt/airflow
     ports:

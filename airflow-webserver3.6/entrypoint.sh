@@ -2,9 +2,9 @@
 /bin/run-parts entrypoint.d
 
 TRY_LOOP="10"
-MYSQL_HOST="172.17.0.2"
+MYSQL_HOST="mysql"
 MYSQL_PORT="3306"
-RABBITMQ_HOST="172.17.0.3"
+RABBITMQ_HOST="rabbitmq"
 RABBITMQ_CREDS="airflow:airflow"
 
 # wait for rabbitmq
