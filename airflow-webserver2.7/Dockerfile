@@ -2,12 +2,12 @@
 # VERSION 0.1.0
 # AUTHOR: Ezhillarasan
 
-FROM tclezhil/centos-airflow-py2.7
+FROM tclezhil/centos-python-2.7
 
 ## Core OS and dependencies install & configure
 
 ## Airflow install
-ENV AIRFLOW_VERSION 1.10.0.dev0+apache.incubating
+ENV AIRFLOW_VERSION 1.10.0
 ENV AIRFLOW_HOME /opt/airflow
 
 RUN useradd --shell /bin/bash --create-home --home $AIRFLOW_HOME airflow \
@@ -17,9 +17,13 @@ RUN useradd --shell /bin/bash --create-home --home $AIRFLOW_HOME airflow \
 
 RUN echo "export PATH=\$PATH:/usr/local/bin/" 
 
-RUN yum install MySQL-python -y
+RUN  python -m pip install apache-airflow==1.10.10 \
+ --constraint https://raw.githubusercontent.com/apache/airflow/1.10.10/requirements/requirements-python2.7.txt
 
-RUN pip install  'pycrypto' 'flask_bcrypt' 'pymysql' 
+RUN pip install 'apache-airflow[celery,rabbitmq,mysql,async,password,hive,druid,ldap,vertica]'
+RUN pip install 'apache-airflow[crypto,kerberos,jdbc,docker]'
+
+RUN pip install  'pycrypto' 'flask_bcrypt' 
 # Entrypoint
 RUN chown -R airflow:airflow /opt/airflow
 
@@ -29,6 +33,7 @@ ADD entrypoint.sh ${AIRFLOW_HOME}/entrypoint.sh
 RUN chmod +x $AIRFLOW_HOME/entrypoint.sh \
     && chmod +x $AIRFLOW_HOME/entrypoint.d/*
 
+RUN yum install net-tools iputils  telnet -y
 # Configuration
 ADD airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
 

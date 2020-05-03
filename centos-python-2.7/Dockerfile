@@ -8,7 +8,7 @@ FROM centos:7
 RUN yum -y update
 RUN yum -y groupinstall "Development Tools"
 RUN yum -y install epel-release 
-RUN	yum -y install python-pip  python-setuptools python-libs python python-devel    \  
+RUN	yum -y install python-pip gcc gcc-c++ libffi-devel  python-setuptools python-libs python python-devel    \  
 	nmap-ncat \
  	krb5-devel \
 	cyrus-sasl \
@@ -37,13 +37,8 @@ RUN pip install 'configparser' 'pandas' 'pymysql' 'mysql-connector-python'
 RUN python -m pip install 'cryptography'
 	
 
-RUN  python -m pip install apache-airflow==1.10.10 \
- --constraint https://raw.githubusercontent.com/apache/airflow/1.10.10/requirements/requirements-python2.7.txt
-
-RUN pip install 'apache-airflow[celery]' 'apache-airflow[rabbitmq]' 'apache-airflow[mysql]' 'apache-airflow[async]' 'apache-airflow[password]' 
-RUN pip install 'apache-airflow[crypto]' 'apache-airflow[kerberos]' 'apache-airflow[jdbc]' 'apache-airflow[docker]'
  
-
+RUN pip install MySQL-python
 RUN rm /etc/localtime && \
     ln -s /usr/share/zoneinfo/Asia/Kolkata /etc/localtime && \
     localedef --quiet -c -i en_US -f UTF-8 en_US.UTF-8

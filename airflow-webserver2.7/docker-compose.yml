@@ -23,7 +23,7 @@ rabbitmq:
         - RABBITMQ_DEFAULT_VHOST=airflow
 
 webserver:
-    image: tclezhil/airflow-webserver2.7
+    image: tclezhil/airflow-python2.7
     restart: always
     volumes:
          - /docker-airflow/dags:/opt/airflow/dags
@@ -40,7 +40,7 @@ webserver:
     command: webserver
 
 flower:
-    image: tclezhil/airflow-webserver2.7
+    image: tclezhil/airflow-python2.7
     restart: always
     environment:
         - AIRFLOW_HOME=/opt/airflow
@@ -51,7 +51,7 @@ flower:
     command: flower
 
 scheduler:
-    image: tclezhil/airflow-webserver2.7
+    image: tclezhil/airflow-python2.7
     restart: always
     volumes:
         - /docker-airflow/dags:/opt/airflow/dags
@@ -64,7 +64,7 @@ scheduler:
     command: scheduler
 
 worker:
-    image: tclezhil/airflow-webserver2.7
+    image: tclezhil/airflow-python2.7
     restart: always
     volumes:
         - /docker-airflow/dags:/opt/airflow/dags
