@@ -47,6 +47,7 @@ flower:
     ports:
         - "5555:5555"
     links:
+        - mysql:mysql
         - rabbitmq:rabbitmq
     command: flower
 

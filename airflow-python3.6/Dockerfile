@@ -15,7 +15,7 @@ RUN useradd --shell /bin/bash --create-home --home $AIRFLOW_HOME airflow \
     && mkdir $AIRFLOW_HOME/dags \
     && chown -R airflow: $AIRFLOW_HOME
 
-RUN echo "export PATH=\$PATH:/usr/local/bin/" 
+RUN echo "export PATH=\$PATH:/usr/local/bin:/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin:~/bin >> /etc/profile" 
 
 RUN pip3 install  'pycrypto' 'mysqlclient' 'flask_bcrypt'
 
@@ -27,15 +27,16 @@ RUN pip3 install 'apache-airflow[celery]' 'apache-airflow[rabbitmq]' 'apache-air
 
 # Entrypoint
 RUN cp /usr/local/bin/airflow /usr/bin/airflow
-
+RUN cp /usr/local/bin/gunicorn /usr/bin/gunicorn
+RUN echo "export PATH=\$PATH:/usr/local/bin:/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin:~/bin >> $AIRFLOW_HOME/.bashrc"
 RUN mkdir $AIRFLOW_HOME/entrypoint.d
 ADD entrypoint.d/* ${AIRFLOW_HOME}/entrypoint.d/
 ADD entrypoint.sh ${AIRFLOW_HOME}/entrypoint.sh
 RUN chmod +x $AIRFLOW_HOME/entrypoint.sh \
     && chmod +x $AIRFLOW_HOME/entrypoint.d/*
 
-RUN yum install net-tools iputils  telnet -y
-
+RUN yum install net-tools iputils mysql-connector-python telnet -y
+RUN pip3 install mysqlclient mysql-connector-python
 # Configuration
 ADD airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
 
