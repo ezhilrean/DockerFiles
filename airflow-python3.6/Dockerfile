@@ -22,8 +22,7 @@ RUN pip3 install  'pycrypto' 'mysqlclient' 'flask_bcrypt'
 RUN  python3.6 -m pip install apache-airflow==1.10.10 \
  --constraint https://raw.githubusercontent.com/apache/airflow/1.10.10/requirements/requirements-python3.7.txt
 
-RUN pip3 install 'apache-airflow[celery]' 'apache-airflow[rabbitmq]' 'apache-airflow[mysql]' 'apache-airflow[async]' 'apache-airflow[password]' 'apache-airflow[crypto]' 'apache-airflow[kerberos]' 'apache-airflow[jdbc]' 'apache-airflow[docker]'
-
+RUN pip3 install 'apache-airflow[celery]' 'apache-airflow[rabbitmq]' 'apache-airflow[mysql]' 'apache-airflow[async]' 'apache-airflow[password]' 'apache-airflow[crypto]' 'apache-airflow[kerberos]' 'apache-airflow[jdbc]' 'apache-airflow[docker]' 'apache-airflow[druid]' 'apache-airflow[ldap]' 'apache-airflow[vertica]'
 
 # Entrypoint
 RUN cp /usr/local/bin/airflow /usr/bin/airflow
@@ -36,7 +35,8 @@ RUN chmod +x $AIRFLOW_HOME/entrypoint.sh \
     && chmod +x $AIRFLOW_HOME/entrypoint.d/*
 
 RUN yum install net-tools iputils mysql-connector-python telnet -y
-RUN pip3 install mysqlclient mysql-connector-python
+RUN pip3 install mysqlclient mysql-connector-python flower wrapper
+
 # Configuration
 ADD airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
 
@@ -46,6 +46,8 @@ RUN sed -i "s:#AIRFLOW_HOME#:$AIRFLOW_HOME:" $AIRFLOW_HOME/airflow.cfg \
 RUN FERNET_KEY=$(python3.6 -c "from cryptography.fernet import Fernet; fernet_key= Fernet.generate_key(); print(fernet_key.decode()) ") \
     && sed -i "s/#FERNET_KEY#/$FERNET_KEY/" $AIRFLOW_HOME/airflow.cfg \
     && sed -i "s/#FERNET_KEY#/$FERNET_KEY/" $AIRFLOW_HOME/entrypoint.d/*
+
+RUN cp /usr/local/bin/flower /usr/bin/flower
 
 EXPOSE 8080 5555 8793
 

@@ -29,13 +29,12 @@ RUN yum -y install python36-pip python36-devel gcc gcc-c++ libffi-devel  python3
 
 
 
-RUN pip3 install --upgrade pip
 
 RUN yum install -y gcc-c++ gcc make gcc-devel libtool
-RUN pip3 install --upgrade pip setuptools
+RUN pip3 install --upgrade setuptools
 RUN pip3 install  'wheel'
 RUN pip3 install 'configparser' 'pandas' 'pymysql' 'mysql-connector-python'
-RUN python3 -m pip install 'cryptography'
+RUN python3.6 -m pip install 'cryptography'
 
 
 

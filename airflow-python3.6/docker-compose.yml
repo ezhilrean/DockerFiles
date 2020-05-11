@@ -28,6 +28,7 @@ webserver:
     volumes:
          - /docker-airflow_3.7/dags:/opt/airflow/dags
          - /docker-airflow_3.7/logs:/opt/airflow/logs
+         - /docker-airflow_3.7/audit_app:/audit_app
     environment:
         - AIRFLOW_HOME=/opt/airflow
     ports:
@@ -57,6 +58,7 @@ scheduler:
     volumes:
         - /docker-airflow_3.7/dags:/opt/airflow/dags
         - /docker-airflow_3.7/logs:/opt/airflow/logs
+        - /docker-airflow_3.7/audit_app:/audit_app
     environment:
         - AIRFLOW_HOME=/opt/airflow
     links:
@@ -70,6 +72,7 @@ worker:
     volumes:
         - /docker-airflow_3.7/dags:/opt/airflow/dags
         - /docker-airflow_3.7/logs:/opt/airflow/logs
+        - /docker-airflow_3.7/audit_app:/audit_app
     environment:
         - AIRFLOW_HOME=/opt/airflow
     ports:
