@@ -50,8 +50,8 @@ RUN FERNET_KEY=$(python3.6 -c "from cryptography.fernet import Fernet; fernet_ke
 RUN cp /usr/local/bin/flower /usr/bin/flower
 
 
-RUN pip3 install tqdm pandas==1.0.3
-
+RUN pip3 install tqdm pandas==1.0.3 xml2json xmljson numpy
+RUN yum install mariadb  wget gzip -y
 EXPOSE 8080 5555 8793
 
 USER root
