@@ -50,8 +50,16 @@ RUN FERNET_KEY=$(python3.6 -c "from cryptography.fernet import Fernet; fernet_ke
 RUN cp /usr/local/bin/flower /usr/bin/flower
 
 
-RUN pip3 install tqdm pandas==1.0.3 xml2json xmljson numpy
-RUN yum install mariadb  wget gzip -y
+RUN yum install mariadb  wget gzip bzip2-devel libmemcached-devel libffi-devel libxml2-python  libxml2 xml-common xmlrpc-c xmlrpc-c-client  -y
+
+RUN pip3 install tqdm pandas==1.0.3 xml2json xmljson numpy xmltodict xmljson zipp argparse urllib3 pylint enum34 pexpect traitlets pyflakes mccabe  encoding-tools idna chardet urllib3 certifi Unidecode==1.1.1 text-unidecode==1.3 unicodecsv==0.14.1 defusedxml argcomplete docutils graphviz json-merge-patch thrift tornado alembic amqp astroid billiard cached-property cattrs croniter dill humanize iso8601 isort json-merge-patch kombu lazy-object-proxy lockfile Mako Markdown pendulum protobuf pycrypto setproctitle tabulate tenacity termcolor termcolor toml typed-ast typing-extensions tzlocal vine Wrapper wrapt setproctitle pytzdata
+
+RUN yum install python-pip jq -y
+RUN pip install --upgrade pip
+RUN pip install pip xmljson xml2json xmltodict
+ENV LANG en_US.UTF-8 
+ENV LC_ALL en_US.UTF-8
+
 EXPOSE 8080 5555 8793
 
 USER root
