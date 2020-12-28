@@ -1,0 +1,10 @@
+apache:
+    image: tclezhil/centos7_opendcim
+    restart: always
+    volumes:
+         - /docker-airflow_3.7/opendcim/opendcim_html:/var/www/html/
+    ports:
+        - "8084:80"
+        - "8085:443"
+    tty: true
+    command: /opt/OPENDCIM/entrypoint.sh
