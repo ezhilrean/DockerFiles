@@ -33,4 +33,9 @@ http://x.x.x.x:5555/
 
 Airflow Web URL
 http://x.x.x.x:8080/
+----------------------------------------------------------------------------
+
+cd /opt/Docker_Worker_Home/opendcim-asset/Dockerfile
+docker rm $(docker ps --filter=status=exited --filter=status=created -q)
+docker-compose -p 'opendcim' up -d
 
